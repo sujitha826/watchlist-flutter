@@ -17,7 +17,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
         final watchlistGroups = _splitContactsIntoSublist(watchlist, 30);
         emit(ContactsLoaded(watchlistGroups));
       } catch (e) {
-        emit(ContactsError('Something Went Wrong!!'));
+        emit(ContactsError('Unable to fetch data!!, Please try again'));
       }
     });
   }

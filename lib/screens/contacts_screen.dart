@@ -12,19 +12,27 @@ class ContactsScreen extends StatefulWidget {
   State<ContactsScreen> createState() => ContactsScreenState();
 }
 
-class ContactsScreenState extends State<ContactsScreen> {
+class ContactsScreenState extends State<ContactsScreen>
+    with SingleTickerProviderStateMixin {
   List<List<ContactModel>> contacts = [];
+  late TabController _tabController;
 
   @override
   void initState() {
     // call API here
     BlocProvider.of<ContactsBloc>(context).add(FetchContacts());
     super.initState();
+    _tabController = TabController(vsync: this, length: 3);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Builder(
       builder: (context) {
         return Scaffold(
@@ -42,28 +50,29 @@ class ContactsScreenState extends State<ContactsScreen> {
                     Icons.arrow_back_ios,
                   ),
                 ),
-                bottom: const TabBar(
-                  tabs: [
+                bottom: TabBar(
+                  controller: _tabController,
+                  tabs: const [
                     Tab(
                       child: Text(
                         'Contacts 1',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                     Tab(
                       child: Text(
                         'Contacts 2',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                     Tab(
                       child: Text(
                         'Contacts 3',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                   ],
-                  indicator: BoxDecoration(
+                  indicator: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
                         color:
@@ -86,6 +95,7 @@ class ContactsScreenState extends State<ContactsScreen> {
                     contacts = state.users;
                     print(contacts);
                     return TabBarView(
+                      controller: _tabController,
                       children: [
                         BlocProvider.value(
                           value: BlocProvider.of<ContactsBloc>(context),
@@ -104,8 +114,8 @@ class ContactsScreenState extends State<ContactsScreen> {
                   }
                   if (state is ContactsError) {
                     // retry here
-                    return const Center(
-                      child: Text('Unable to fetch data, Please try again!!'),
+                    return Center(
+                      child: Text(state.errorMessage),
                     );
                   }
                   return Container(
