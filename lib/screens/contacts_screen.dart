@@ -15,6 +15,7 @@ class ContactsScreen extends StatefulWidget {
 class ContactsScreenState extends State<ContactsScreen>
     with SingleTickerProviderStateMixin {
   List<List<ContactModel>> contacts = [];
+  List<List<ContactModel>> sorted = [];
   late TabController _tabController;
 
   @override
@@ -40,14 +41,20 @@ class ContactsScreenState extends State<ContactsScreen>
             length: 3,
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                title: const Text('WatchList'),
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+                title: Text(
+                  'Contacts List',
+                  style: TextStyle(
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
+                ),
                 leading: const Padding(
                   padding: EdgeInsets.only(
                     left: 15,
                   ),
                   child: Icon(
-                    Icons.arrow_back_ios,
+                    Icons.people,
                   ),
                 ),
                 bottom: TabBar(
@@ -55,19 +62,19 @@ class ContactsScreenState extends State<ContactsScreen>
                   tabs: const [
                     Tab(
                       child: Text(
-                        'Contacts 1',
+                        'Group 1',
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        'Contacts 2',
+                        'Group 2',
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        'Contacts 3',
+                        'Group 3',
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
@@ -84,30 +91,44 @@ class ContactsScreenState extends State<ContactsScreen>
                   labelColor: Colors.black,
                 ),
               ),
-              body: BlocBuilder<ContactsBloc, ContactsState>(
+              body: BlocConsumer<ContactsBloc, ContactsState>(
+                listener: (context, state) {
+                  if (state is ContactsLoaded) {
+                    contacts = state.users;
+                  }
+                },
                 builder: (context, state) {
                   if (state is ContactsLoading) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
-                  if (state is ContactsLoaded) {
-                    contacts = state.users;
-                    print(contacts);
+                  if (state is ContactsSorted) {
+                    sorted = state.sortedUsers;
+                    print(sorted[0][0].name);
                     return TabBarView(
                       controller: _tabController,
                       children: [
                         BlocProvider.value(
                           value: BlocProvider.of<ContactsBloc>(context),
-                          child: Tab1(contacts: contacts[0]),
+                          child: Tab1(
+                              contacts: sorted[0],
+                              allList : contacts,
+                              currentTab: 0),
                         ),
                         BlocProvider.value(
                           value: BlocProvider.of<ContactsBloc>(context),
-                          child: Tab1(contacts: contacts[1]),
+                          child: Tab1(
+                              contacts: sorted[1],
+                              allList : contacts,
+                              currentTab: 1),
                         ),
                         BlocProvider.value(
                           value: BlocProvider.of<ContactsBloc>(context),
-                          child: Tab1(contacts: contacts[2]),
+                          child: Tab1(
+                              contacts: sorted[2],
+                              allList : contacts,
+                              currentTab: 2),
                         ),
                       ],
                     );
