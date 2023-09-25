@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist_flutter_bloc/models/contact_model.dart';
 import 'package:watchlist_flutter_bloc/bloc/contacts_bloc.dart';
 import 'package:watchlist_flutter_bloc/models/enums.dart';
+import 'package:watchlist_flutter_bloc/appConstants/constants.dart';
 
 class Tab1 extends StatefulWidget {
   const Tab1({
@@ -118,10 +119,10 @@ class _Tab1State extends State<Tab1> {
                                         20, 20, 20, 0),
                                     child: Row(
                                       children: [
-                                        const Expanded(
+                                        Expanded(
                                           child: Text(
-                                            'Sorting',
-                                            style: TextStyle(
+                                            AppConstants.sortBy,
+                                            style: const TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -131,12 +132,12 @@ class _Tab1State extends State<Tab1> {
                                           onTap: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Padding(
+                                          child: Padding(
                                             padding:
-                                                EdgeInsets.only(right: 16.0),
+                                                const EdgeInsets.only(right: 16.0),
                                             child: Text(
-                                              'Done',
-                                              style: TextStyle(
+                                              AppConstants.done,
+                                              style: const TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.blue),
@@ -152,9 +153,9 @@ class _Tab1State extends State<Tab1> {
                                   ListTile(
                                     title: Row(
                                       children: [
-                                        const Text(
-                                          'Alphabetically',
-                                          style: TextStyle(fontSize: 16),
+                                        Text(
+                                          AppConstants.alphabetic,
+                                          style: const TextStyle(fontSize: 16),
                                         ),
                                         const Spacer(),
                                         Padding(
@@ -175,7 +176,7 @@ class _Tab1State extends State<Tab1> {
                                                   ));
                                             },
                                             child: Text(
-                                              'A \u{2191} Z',
+                                              AppConstants.aToZ,
                                               style: TextStyle(
                                                   color: _selectedSortOption ==
                                                               SortOptions
@@ -204,7 +205,7 @@ class _Tab1State extends State<Tab1> {
                                                 ));
                                           },
                                           child: Text(
-                                            'Z \u{2191} A',
+                                            AppConstants.zToA,
                                             style: TextStyle(
                                                 color: _selectedSortOption ==
                                                             SortOptions
@@ -230,9 +231,9 @@ class _Tab1State extends State<Tab1> {
                                   ListTile(
                                     title: Row(
                                       children: [
-                                        const Text(
-                                          'Numerically',
-                                          style: TextStyle(fontSize: 16),
+                                        Text(
+                                          AppConstants.numeric,
+                                          style: const TextStyle(fontSize: 16),
                                         ),
                                         const Spacer(),
                                         Padding(
@@ -253,7 +254,7 @@ class _Tab1State extends State<Tab1> {
                                                   ));
                                             },
                                             child: Text(
-                                              '0 \u{2193} 9',
+                                              AppConstants.zeroToNine,
                                               style: TextStyle(
                                                   color: _selectedSortOption ==
                                                               SortOptions
@@ -282,7 +283,7 @@ class _Tab1State extends State<Tab1> {
                                                 ));
                                           },
                                           child: Text(
-                                            '9 \u{2191} 0',
+                                            AppConstants.nineToZero,
                                             style: TextStyle(
                                                 color: _selectedSortOption ==
                                                             SortOptions

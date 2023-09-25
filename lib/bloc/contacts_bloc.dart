@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist_flutter_bloc/appConstants/constants.dart';
 
 import '../models/contact_model.dart';
 import '../repositories/contacts_repo.dart';
@@ -22,12 +23,12 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
             selectedSortType: SortTypes.asc,
             indexTab: 0));
       } catch (e) {
-        emit(ContactsError('Unable to fetch data!!, Please try again'));
+        emit(ContactsError(AppConstants.apiFailed));
       }
     });
 
     on<SortContacts>((event, emit) async {
-      print('event fired');
+      // print('event fired');
       emit(ContactsLoading());
       try {
         final listSorted = _sortContacts(allUsersList, event.sortType,
@@ -38,10 +39,11 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
             selectedSortType: event.sortType,
             indexTab: event.currentTabIndex));
       } catch (e) {
-        emit(ContactsError('Unable to Sort contacts!!, Please try again'));
+        emit(ContactsError(AppConstants.sortFailed));
       }
     });
   }
+  
   List<List<ContactModel>> allUsersList = [];
 
   List<List<ContactModel>> _splitContactsIntoSublist(
@@ -126,7 +128,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
           final numericB = int.tryParse(b.name.split(' ').last) ?? 0;
           return numericB.compareTo(numericA);
         });
-        print(sortedList[0][0].name);
+        // print(sortedList[0][0].name);
       }
     } else if (option == SortOptions.numeric) {
       if (type == SortTypes.asc) {
