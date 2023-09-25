@@ -6,12 +6,12 @@ final class FetchContacts extends ContactsEvent {}
 
 final class SortContacts extends ContactsEvent {
   SortContacts(
-      {required this.inputList,
+      {// required this.inputList,
       required this.sortType,
       required this.sortOption,
       required this.currentTabIndex});
 
-  List<List<ContactModel>> inputList;
+  // List<List<ContactModel>> inputList;
   SortTypes sortType;
   SortOptions sortOption;
   int currentTabIndex;

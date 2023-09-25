@@ -17,13 +17,18 @@ class ContactsScreenState extends State<ContactsScreen>
   List<List<ContactModel>> contacts = [];
   List<List<ContactModel>> sorted = [];
   late TabController _tabController;
+  int currentIndex = 0;
 
   @override
   void initState() {
+    super.initState();
     // call API here
     BlocProvider.of<ContactsBloc>(context).add(FetchContacts());
-    super.initState();
     _tabController = TabController(vsync: this, length: 3);
+    _tabController.addListener(() {
+      currentIndex = _tabController.index;
+      print("Selected tab index: $currentIndex");
+    });
   }
 
   @override
@@ -41,13 +46,12 @@ class ContactsScreenState extends State<ContactsScreen>
             length: 3,
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor:
-                    Theme.of(context).colorScheme.secondaryContainer,
+                backgroundColor: const Color.fromARGB(96, 104, 58, 183),
                 title: Text(
                   'Contacts List',
                   style: TextStyle(
-                      color:
-                          Theme.of(context).colorScheme.onSecondaryContainer),
+                      fontSize: 25,
+                      color: Theme.of(context).colorScheme.onBackground),
                 ),
                 leading: const Padding(
                   padding: EdgeInsets.only(
@@ -55,6 +59,7 @@ class ContactsScreenState extends State<ContactsScreen>
                   ),
                   child: Icon(
                     Icons.people,
+                    size: 30,
                   ),
                 ),
                 bottom: TabBar(
@@ -84,7 +89,7 @@ class ContactsScreenState extends State<ContactsScreen>
                       bottom: BorderSide(
                         color:
                             Colors.blue, // Color of the underline when selected
-                        width: 3.0, // Thickness of the underline
+                        width: 4.0, // Thickness of the underline
                       ),
                     ),
                   ),
@@ -105,7 +110,7 @@ class ContactsScreenState extends State<ContactsScreen>
                   }
                   if (state is ContactsSorted) {
                     sorted = state.sortedUsers;
-                    print(sorted[0][0].name);
+                    // print(sorted[0][0].name);
                     return TabBarView(
                       controller: _tabController,
                       children: [
@@ -113,21 +118,21 @@ class ContactsScreenState extends State<ContactsScreen>
                           value: BlocProvider.of<ContactsBloc>(context),
                           child: Tab1(
                               contacts: sorted[0],
-                              allList : contacts,
+                              // allList : contacts,
                               currentTab: 0),
                         ),
                         BlocProvider.value(
                           value: BlocProvider.of<ContactsBloc>(context),
                           child: Tab1(
                               contacts: sorted[1],
-                              allList : contacts,
+                              // allList : contacts,
                               currentTab: 1),
                         ),
                         BlocProvider.value(
                           value: BlocProvider.of<ContactsBloc>(context),
                           child: Tab1(
                               contacts: sorted[2],
-                              allList : contacts,
+                              // allList : contacts,
                               currentTab: 2),
                         ),
                       ],

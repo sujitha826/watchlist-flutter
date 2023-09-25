@@ -25,11 +25,12 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
         emit(ContactsError('Unable to fetch data!!, Please try again'));
       }
     });
+
     on<SortContacts>((event, emit) async {
       print('event fired');
       emit(ContactsLoading());
       try {
-        final listSorted = _sortContacts(event.inputList, event.sortType,
+        final listSorted = _sortContacts(allUsersList, event.sortType,
             event.sortOption, event.currentTabIndex);
         emit(ContactsSorted(
             sortedUsers: listSorted,
@@ -41,6 +42,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
       }
     });
   }
+  List<List<ContactModel>> allUsersList = [];
 
   List<List<ContactModel>> _splitContactsIntoSublist(
       List<ContactModel> contacts, int chunkSize) {
@@ -51,6 +53,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
           i, endIndex > contacts.length ? contacts.length : endIndex);
       sublistFinal.add(sublist);
     }
+    allUsersList = sublistFinal;
     return sublistFinal;
   }
 
@@ -105,14 +108,24 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
 
   List<List<ContactModel>> _sortContacts(List<List<ContactModel>> input,
       SortTypes type, SortOptions option, int index) {
-    print('inside sort method');
+    // print('inside sort method');
     List<List<ContactModel>> sortedList = List.from(input);
 
     if (option == SortOptions.alphabetic) {
       if (type == SortTypes.asc) {
-        sortedList[index].sort((a, b) => a.name.compareTo(b.name));
+        // sortedList[index].sort((a, b) => a.name.compareTo(b.name));
+        sortedList[index].sort((a, b) {
+          final numericA = int.tryParse(a.name.split(' ').last) ?? 0;
+          final numericB = int.tryParse(b.name.split(' ').last) ?? 0;
+          return numericA.compareTo(numericB);
+        });
       } else {
-        sortedList[index].sort((a, b) => b.name.compareTo(a.name));
+        // sortedList[index].sort((a, b) => b.name.compareTo(a.name));
+        sortedList[index].sort((a, b) {
+          final numericA = int.tryParse(a.name.split(' ').last) ?? 0;
+          final numericB = int.tryParse(b.name.split(' ').last) ?? 0;
+          return numericB.compareTo(numericA);
+        });
         print(sortedList[0][0].name);
       }
     } else if (option == SortOptions.numeric) {

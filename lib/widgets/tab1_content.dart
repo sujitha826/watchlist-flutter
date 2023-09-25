@@ -6,11 +6,16 @@ import 'package:watchlist_flutter_bloc/bloc/contacts_bloc.dart';
 import 'package:watchlist_flutter_bloc/models/enums.dart';
 
 class Tab1 extends StatefulWidget {
-  const Tab1({super.key, required this.contacts, required this.currentTab, required this.allList});
+  const Tab1({
+    super.key,
+    required this.contacts,
+    required this.currentTab,
+    // required this.allList,
+  });
 
   final List<ContactModel> contacts;
   final int currentTab;
-  final List<List<ContactModel>> allList;
+  // final List<List<ContactModel>> allList;
 
   @override
   State<Tab1> createState() => _Tab1State();
@@ -161,7 +166,7 @@ class _Tab1State extends State<Tab1> {
                                               context
                                                   .read<ContactsBloc>()
                                                   .add(SortContacts(
-                                                    inputList: widget.allList,
+                                                    // inputList: widget.allList,
                                                     sortOption:
                                                         SortOptions.alphabetic,
                                                     sortType: SortTypes.asc,
@@ -190,7 +195,7 @@ class _Tab1State extends State<Tab1> {
                                             context
                                                 .read<ContactsBloc>()
                                                 .add(SortContacts(
-                                                  inputList: widget.allList,
+                                                  // inputList: widget.allList,
                                                   sortOption:
                                                       SortOptions.alphabetic,
                                                   sortType: SortTypes.dsc,
@@ -239,7 +244,7 @@ class _Tab1State extends State<Tab1> {
                                               context
                                                   .read<ContactsBloc>()
                                                   .add(SortContacts(
-                                                    inputList: widget.allList,
+                                                    // inputList: widget.allList,
                                                     sortOption:
                                                         SortOptions.numeric,
                                                     sortType: SortTypes.asc,
@@ -268,7 +273,7 @@ class _Tab1State extends State<Tab1> {
                                             context
                                                 .read<ContactsBloc>()
                                                 .add(SortContacts(
-                                                  inputList: widget.allList,
+                                                  // inputList: widget.allList,
                                                   sortOption:
                                                       SortOptions.numeric,
                                                   sortType: SortTypes.dsc,
