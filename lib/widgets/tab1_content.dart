@@ -16,6 +16,7 @@ class Tab1 extends StatefulWidget {
 
   final List<ContactModel> contacts;
   final int currentTab;
+
   // final List<List<ContactModel>> allList;
 
   @override
@@ -28,7 +29,7 @@ class _Tab1State extends State<Tab1> {
 
   @override
   Widget build(BuildContext context) {
-    // print(widget.currentTab);
+    print(widget.currentTab);
     // print(widget.contacts[0].name);
     return Stack(
       children: [
@@ -133,8 +134,8 @@ class _Tab1State extends State<Tab1> {
                                             Navigator.pop(context);
                                           },
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 16.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 16.0),
                                             child: Text(
                                               AppConstants.done,
                                               style: const TextStyle(

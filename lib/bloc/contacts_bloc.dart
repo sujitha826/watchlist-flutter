@@ -43,7 +43,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
       }
     });
   }
-  
+
   List<List<ContactModel>> allUsersList = [];
 
   List<List<ContactModel>> _splitContactsIntoSublist(
